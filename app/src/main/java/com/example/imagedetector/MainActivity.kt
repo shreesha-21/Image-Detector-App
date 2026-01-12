@@ -1,4 +1,4 @@
-package com.example.imagedetector
+    package com.example.imagedetector
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
