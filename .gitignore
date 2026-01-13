@@ -9,10 +9,11 @@
 /.idea/assetWizardSettings.xml
 /.idea/compiler.xml
 /.idea/deploymentTargetSelector.xml
+/.idea/inspectionProfiles
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
-
+/.kotlin/

@@ -75,4 +75,8 @@ dependencies {
     // Permissions
     implementation(libs.accompanist.permissions)
 
+    // Icon Package
+    implementation(libs.androidx.compose.material.icons.extended) // Check for the latest version
+
+
 }
