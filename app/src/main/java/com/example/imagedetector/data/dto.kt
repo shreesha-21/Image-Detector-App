@@ -1,18 +1,15 @@
 package com.example.imagedetector.data
 
+import com.google.gson.annotations.SerializedName
+
 data class DetectionResponse(
     val detections: List<DetectionObject>
 )
 
+//  Data class to be used as blueprint to convert json response from the server into kotlin object
 data class DetectionObject(
     val label: String,
     val confidence: Float,
-    val box: BoundingBox // The server returns [x_min, y_min, x_max, y_max]
+    @SerializedName("bbox") val box: List<Float>
 )
 
-data class BoundingBox(
-    val x1: Float,
-    val y1: Float,
-    val x2: Float,
-    val y2: Float
-)
