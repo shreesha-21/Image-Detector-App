@@ -79,5 +79,7 @@ dependencies {
     // Icon Package
     implementation(libs.androidx.compose.material.icons.extended) // Check for the latest version
 
+    //    Dependency to use viewmodel in Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
 }
