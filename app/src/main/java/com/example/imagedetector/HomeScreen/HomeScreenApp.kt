@@ -12,7 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.imagedetector.ui.components.CameraPermissionWrapper
 import com.example.imagedetector.ui.components.CameraView
+import com.example.imagedetector.ui.components.PermissionRequestAlertDialog
 import com.example.imagedetector.ui.components.ResultView
 
 //  Composable to display the HomeScreen of the application
@@ -27,9 +29,18 @@ fun HomeScreen(
         Box(Modifier.padding(padding)) {
             when (val currentState = state) {
                 is HomeScreenUiState.Camera -> {
-                    CameraView(onImageCaptured = { file ->
-                        viewModel.processImage(file)
-                    })
+//                    CameraView(onImageCaptured = { file ->
+//                        viewModel.processImage(file)
+//                    })
+                    CameraPermissionWrapper(
+                        onPermissionGranted = {
+                            CameraView(
+                                onImageCaptured = { file ->
+                                    viewModel.processImage(file)
+                                }
+                            )
+                        },
+                    )
                 }
                 is HomeScreenUiState.Loading -> {
                     CircularProgressIndicator(Modifier.align(Alignment.Center))

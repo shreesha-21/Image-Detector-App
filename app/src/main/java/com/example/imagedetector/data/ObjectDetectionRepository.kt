@@ -10,7 +10,7 @@ import java.io.File
 class ObjectDetectionRepository {
     private val api: ObjectDetectionApi by lazy {
         Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("http://127.0.0.1:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ObjectDetectionApi::class.java)

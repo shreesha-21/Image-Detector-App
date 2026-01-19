@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Image Detector</string>
     <string name="camera_button_description">Camera Button</string>
+    <string name="permission_alert_title">Permission required!</string>
+    <string name="permission_rationale">This permission is required to take the picture for image detection</string>
 </resources>
