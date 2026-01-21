@@ -1,7 +1,8 @@
-package com.example.imagedetector.HomeScreen
+package com.example.imagedetector.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.imagedetector.homeScreen.HomeScreenUiState.Success
 import com.example.imagedetector.data.ObjectDetectionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,14 +26,26 @@ class HomeScreenViewModel: ViewModel() {
         viewModelScope.launch {
             val result = repository.uploadImage(file)
             result.onSuccess { detections ->
-                _homeScreenUiState.value = HomeScreenUiState.Success(file, detections)
+                _homeScreenUiState.value = Success(file, detections)
             }.onFailure { error ->
                 _homeScreenUiState.value = HomeScreenUiState.Error(error.localizedMessage ?: "Unknown Error")
             }
         }
     }
 
+    //  Resets the screen to the initial view which shows the camera to the user
     fun resetToCamera() {
+
+        val currentState = homeScreenUiState.value
+
+        //  Deletes any image file that was not required anymore
+        if (currentState is Success) {
+            val imageFile = currentState.imageFile
+            if (imageFile.exists()) {
+                imageFile.delete()
+            }
+        }
+
         _homeScreenUiState.value = HomeScreenUiState.Camera
     }
 
