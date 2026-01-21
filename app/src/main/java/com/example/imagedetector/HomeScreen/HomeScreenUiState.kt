@@ -1,4 +1,4 @@
-package com.example.imagedetector.HomeScreen
+package com.example.imagedetector.homeScreen
 
 import com.example.imagedetector.data.DetectionResponse
 import java.io.File
