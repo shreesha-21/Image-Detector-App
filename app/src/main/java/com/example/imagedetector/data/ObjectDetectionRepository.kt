@@ -19,7 +19,7 @@ class ObjectDetectionRepository {
     suspend fun uploadImage(file: File): Result<DetectionResponse> {
         return try {
             val requestFile = file.asRequestBody(contentType = "image/jpeg".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
             val response: DetectionResponse = api.detectObjects(body)
             Result.success(response)
         } catch (e: Exception) {
