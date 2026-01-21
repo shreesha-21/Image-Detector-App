@@ -1,5 +1,7 @@
 package com.example.imagedetector.ui.components
 
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.view.LifecycleCameraController
@@ -18,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -40,7 +43,8 @@ fun CameraView(onImageCaptured: (File) -> Unit) {
                     this.controller = controller
                     controller.bindToLifecycle(lifecycleOwner)
                 }
-            }
+            },
+            modifier = Modifier.fillMaxSize()
         )
         Button(
             modifier = Modifier
@@ -70,4 +74,10 @@ fun CameraView(onImageCaptured: (File) -> Unit) {
 
     }
 
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CameraViewPreview() {
+    CameraView(onImageCaptured = {})
 }
