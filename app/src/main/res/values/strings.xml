@@ -3,4 +3,6 @@
     <string name="camera_button_description">Camera Button</string>
     <string name="permission_alert_title">Permission required!</string>
     <string name="permission_rationale">This permission is required to take the picture for image detection</string>
+    <string name="error_message">Error: %s</string>
+    <string name="retry_button_text">Take a new picture</string>
 </resources>
