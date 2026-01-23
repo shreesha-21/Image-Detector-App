@@ -1,6 +1,9 @@
 package com.example.imagedetector.ui.components
 
+import android.R.attr.textSize
 import android.graphics.BitmapFactory.*
+import android.graphics.Color.*
+import android.graphics.Paint
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -17,9 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color as AndroidColor
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import com.example.imagedetector.R
@@ -36,6 +42,16 @@ fun ResultView(
     modifier: Modifier = Modifier
 ) {
     val bitmap = remember(file) { decodeAndRotateBitmap(file) }
+
+    val textPaint: Paint = remember {
+        Paint().apply {
+            color = AndroidColor.Red.toArgb()
+            textSize = 40f
+            style = Paint.Style.FILL
+            isAntiAlias = true
+            strokeWidth = 2f
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,26 +79,34 @@ fun ResultView(
                 val scaleX = size.width / bitmap.width
                 val scaleY = scaleX
 
-                detectionResponse.detections.forEach { obj ->
-                    // Extract coordinates from the list
-                    // The server sends [x1, y1, x2, y2]
-                    val x1 = obj.box[0]
-                    val y1 = obj.box[1]
-                    val x2 = obj.box[2]
-                    val y2 = obj.box[3]
+                drawIntoCanvas { canvas ->
+                    detectionResponse.detections.forEach { obj ->
+                        val x1 = obj.box[0]
+                        val y1 = obj.box[1]
+                        val x2 = obj.box[2]
+                        val y2 = obj.box[3]
 
-                    // Apply scaling (Screen Size / Image Size)
-                    val left = x1 * scaleX
-                    val top = y1 * scaleY
-                    val right = x2 * scaleX
-                    val bottom = y2 * scaleY
+                        val left = x1 * scaleX
+                        val top = y1 * scaleY
+                        val right = x2 * scaleX
+                        val bottom = y2 * scaleY
 
-                    drawRect(
-                        color = Color.Red,
-                        topLeft = Offset(left, top),
-                        size = Size(right - left, bottom - top),
-                        style = Stroke(width = 8f)
-                    )
+                        // Drawing the Box
+                        drawRect(
+                            color = AndroidColor.Red,
+                            topLeft = Offset(left, top),
+                            size = Size(right - left, bottom - top),
+                            style = Stroke(width = 8f)
+                        )
+
+                        // Replace 'obj.label' with the actual name of your class variable (e.g., obj.className)
+                        canvas.nativeCanvas.drawText(
+                            obj.label,
+                            left,
+                            top - 10f,
+                            textPaint
+                        )
+                    }
                 }
             }
         }
@@ -92,4 +116,5 @@ fun ResultView(
             Text(stringResource(R.string.retry_button_text))
         }
     }
+
 }
